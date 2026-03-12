@@ -10,33 +10,27 @@
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
     font-family:'Nunito',sans-serif;
-    background: #0d1b2a;
+    background:#0d1b2a;
     min-height:100vh;
     color:#fff;
     overflow-x:hidden;
   }
-
-  /* Stars background */
   body::before{
-    content:'';
-    position:fixed;inset:0;
+    content:'';position:fixed;inset:0;
     background-image:
-      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.5) 0%, transparent 100%),
-      radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.4) 0%, transparent 100%),
-      radial-gradient(1px 1px at 55% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
-      radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.3) 0%, transparent 100%),
-      radial-gradient(1px 1px at 85% 35%, rgba(255,255,255,0.5) 0%, transparent 100%),
-      radial-gradient(1px 1px at 92% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
-      radial-gradient(1px 1px at 20% 90%, rgba(255,255,255,0.5) 0%, transparent 100%),
-      radial-gradient(1px 1px at 45% 45%, rgba(255,255,255,0.3) 0%, transparent 100%);
-    pointer-events:none;
-    z-index:0;
+      radial-gradient(1px 1px at 10% 20%,rgba(255,255,255,0.5) 0%,transparent 100%),
+      radial-gradient(1px 1px at 30% 60%,rgba(255,255,255,0.4) 0%,transparent 100%),
+      radial-gradient(1px 1px at 55% 15%,rgba(255,255,255,0.6) 0%,transparent 100%),
+      radial-gradient(1px 1px at 70% 80%,rgba(255,255,255,0.3) 0%,transparent 100%),
+      radial-gradient(1px 1px at 85% 35%,rgba(255,255,255,0.5) 0%,transparent 100%),
+      radial-gradient(1px 1px at 20% 90%,rgba(255,255,255,0.5) 0%,transparent 100%);
+    pointer-events:none;z-index:0;
   }
 
   .screen{position:relative;z-index:1;display:none;min-height:100vh;}
   .screen.active{display:flex;flex-direction:column;}
 
-  /* ─── MENU ─── */
+  /* ── MENU ── */
   #menu{align-items:center;justify-content:center;padding:32px 20px;text-align:center;}
   .menu-emoji{font-size:72px;margin-bottom:12px;animation:bounce 2s infinite;}
   @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
@@ -47,49 +41,115 @@
   .btn{display:inline-block;border:none;border-radius:50px;padding:16px 44px;font-size:18px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;letter-spacing:0.5px;transition:transform 0.15s,box-shadow 0.15s;}
   .btn:active{transform:scale(0.96);}
   .btn-start{background:linear-gradient(135deg,#ef476f,#f78c6c);color:#fff;box-shadow:0 8px 24px rgba(239,71,111,0.5);}
-  .btn-start:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(239,71,111,0.6);}
   .btn-next{background:linear-gradient(135deg,#06d6a0,#48cae4);color:#0d1b2a;box-shadow:0 8px 24px rgba(6,214,160,0.4);}
   .btn-restart{background:linear-gradient(135deg,#ffd166,#f4a261);color:#0d1b2a;box-shadow:0 8px 24px rgba(255,209,102,0.4);}
 
-  /* ─── GAME ─── */
-  #game{padding:12px;}
-  .game-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
-  .game-title{font-family:'Fredoka One',cursive;font-size:18px;color:#ffd166;}
+  /* ── SCORE BANNER — big and unmissable ── */
+  .score-banner{
+    display:flex;justify-content:center;gap:12px;
+    padding:12px 12px 0;
+  }
+  .score-box{
+    flex:1;max-width:160px;border-radius:16px;
+    padding:10px 8px;text-align:center;
+    font-family:'Fredoka One',cursive;
+  }
+  .score-box .score-num{font-size:40px;line-height:1;display:block;}
+  .score-box .score-lbl{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-top:2px;display:block;}
+  .score-correct{background:rgba(6,214,160,0.15);border:2px solid #06d6a0;color:#06d6a0;}
+  .score-wrong{background:rgba(239,71,111,0.15);border:2px solid #ef476f;color:#ef476f;}
+
+  /* ── GAME ── */
+  #game{padding:0 12px 12px;}
+  .game-header{display:flex;justify-content:space-between;align-items:center;margin:10px 0 8px;flex-wrap:wrap;gap:8px;}
+  .game-title{font-family:'Fredoka One',cursive;font-size:16px;color:#ffd166;}
   .game-round{font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;}
-  .scores{display:flex;gap:8px;align-items:center;}
-  .score-badge{border-radius:20px;padding:4px 14px;font-size:13px;font-weight:800;}
-  .score-good{background:rgba(6,214,160,0.2);color:#06d6a0;}
-  .score-bad{background:rgba(239,71,111,0.2);color:#ef476f;}
-  .progress-bar{background:rgba(255,255,255,0.1);border-radius:10px;height:6px;margin-bottom:14px;overflow:hidden;}
+  .btn-sm{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);border:none;border-radius:20px;padding:4px 14px;font-size:12px;cursor:pointer;font-family:'Nunito',sans-serif;}
+
+  .progress-bar{background:rgba(255,255,255,0.1);border-radius:10px;height:6px;margin-bottom:12px;overflow:hidden;}
   .progress-fill{height:100%;background:linear-gradient(90deg,#06d6a0,#48cae4);border-radius:10px;transition:width 0.4s;}
-  .instruction{text-align:center;font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:12px;}
+  .instruction{text-align:center;font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:10px;}
+
   .columns{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
   .col-label{text-align:center;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
   .col-label.titles{color:#ffd166;}
   .col-label.authors{color:#48cae4;}
   .col-cards{display:flex;flex-direction:column;gap:6px;}
+
+  /* Cards — clean, no color confusion */
   .card{
     border-radius:12px;padding:10px 12px;font-size:12px;font-weight:700;
-    border:2px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.07);
-    color:#fff;cursor:pointer;text-align:left;font-family:'Nunito',sans-serif;
-    transition:all 0.18s;line-height:1.4;
+    border:2px solid rgba(255,255,255,0.15);
+    background:rgba(255,255,255,0.07);
+    color:#fff;cursor:pointer;text-align:left;
+    font-family:'Nunito',sans-serif;
+    transition:background 0.15s,border-color 0.15s,transform 0.15s,box-shadow 0.15s;
+    line-height:1.4;
   }
-  .card:hover:not(.matched):not(.disabled){background:rgba(255,255,255,0.13);transform:translateY(-1px);}
-  .card.selected{color:#0d1b2a;font-weight:800;transform:translateY(-2px);}
-  .card.matched{opacity:0.4;cursor:default;border-color:rgba(6,214,160,0.3)!important;background:rgba(6,214,160,0.08)!important;color:#06d6a0!important;}
-  .card.wrong-flash{animation:wrongShake 0.4s ease;}
-  @keyframes wrongShake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
-  .card.correct-flash{animation:correctPop 0.35s ease;}
-  @keyframes correctPop{0%{transform:scale(1);}50%{transform:scale(1.06);}100%{transform:scale(1);}}
+  .card:hover:not(.matched){background:rgba(255,255,255,0.13);transform:translateY(-1px);}
+
+  /* Selected = bright white glow, clear but neutral */
+  .card.selected{
+    background:rgba(255,255,255,0.2);
+    border-color:rgba(255,255,255,0.9);
+    box-shadow:0 0 0 3px rgba(255,255,255,0.2);
+    transform:translateY(-2px);
+  }
+
+  /* CORRECT = bold green flash */
+  .card.correct-flash{
+    background:#06d6a0 !important;
+    border-color:#06d6a0 !important;
+    color:#0d1b2a !important;
+    animation:correctPop 0.45s ease forwards;
+  }
+  @keyframes correctPop{
+    0%{transform:scale(1);}
+    40%{transform:scale(1.1);}
+    100%{transform:scale(1);}
+  }
+
+  /* WRONG = bold red shake */
+  .card.wrong-flash{
+    background:#ef476f !important;
+    border-color:#ef476f !important;
+    color:#fff !important;
+    animation:wrongShake 0.5s ease;
+  }
+  @keyframes wrongShake{
+    0%,100%{transform:translateX(0);}
+    20%{transform:translateX(-9px);}
+    40%{transform:translateX(9px);}
+    60%{transform:translateX(-6px);}
+    80%{transform:translateX(6px);}
+  }
+
+  /* Matched = dimmed green, done */
+  .card.matched{
+    opacity:0.4;cursor:default;
+    background:rgba(6,214,160,0.12) !important;
+    border-color:rgba(6,214,160,0.35) !important;
+    color:#06d6a0 !important;
+  }
+
+  /* Big emoji toast in the middle of screen */
+  #toast{
+    position:fixed;top:50%;left:50%;
+    transform:translate(-50%,-50%) scale(0.5);
+    font-size:clamp(60px,18vw,100px);
+    pointer-events:none;z-index:200;
+    opacity:0;transition:opacity 0.12s,transform 0.12s;
+  }
+  #toast.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
 
   /* Round complete */
-  #round-complete{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;padding:24px;}
+  #round-complete{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:24px;}
   #round-complete.show{display:flex;}
   #round-complete .big-emoji{font-size:64px;margin-bottom:12px;}
   #round-complete h2{font-family:'Fredoka One',cursive;font-size:28px;color:#06d6a0;margin-bottom:8px;}
   #round-complete p{color:rgba(255,255,255,0.7);margin-bottom:28px;font-size:15px;}
 
-  /* ─── DONE ─── */
+  /* ── DONE ── */
   #done{align-items:center;justify-content:center;text-align:center;padding:32px 20px;}
   #done .big-emoji{font-size:80px;margin-bottom:16px;}
   #done h1{font-family:'Fredoka One',cursive;font-size:clamp(28px,8vw,48px);color:#ffd166;margin-bottom:8px;}
@@ -97,13 +157,13 @@
   #done .final-score{background:rgba(255,255,255,0.07);border-radius:16px;padding:20px 32px;margin-bottom:28px;font-size:18px;font-weight:700;}
   #done .final-score span{display:inline-block;margin:0 12px;}
 
-  /* flash overlay */
-  #flash-overlay{position:fixed;inset:0;pointer-events:none;z-index:50;transition:background 0.2s;border-radius:0;}
+  #flash-overlay{position:fixed;inset:0;pointer-events:none;z-index:50;transition:background 0.25s;}
 </style>
 </head>
 <body>
 
 <div id="flash-overlay"></div>
+<div id="toast"></div>
 
 <!-- MENU -->
 <div id="menu" class="screen active">
@@ -113,7 +173,8 @@
   <div class="menu-card">
     <strong>How to play:</strong><br>
     Tap a 📖 book title, then tap the matching ✍️ author.<br>
-    Get them all right to win!<br>
+    <strong style="color:#06d6a0;">Green flash = correct!</strong><br>
+    <strong style="color:#ef476f;">Red shake = wrong, try again!</strong><br>
     <span style="font-size:13px;color:rgba(255,255,255,0.5);">20 books · played in rounds of 5</span>
   </div>
   <button class="btn btn-start" onclick="startGame()">Start Game 🎮</button>
@@ -121,18 +182,29 @@
 
 <!-- GAME -->
 <div id="game" class="screen">
+
+  <!-- Big visible scoreboard -->
+  <div class="score-banner">
+    <div class="score-box score-correct">
+      <span class="score-num" id="score-correct">0</span>
+      <span class="score-lbl">✅ Correct</span>
+    </div>
+    <div class="score-box score-wrong">
+      <span class="score-num" id="score-wrong">0</span>
+      <span class="score-lbl">❌ Wrong</span>
+    </div>
+  </div>
+
   <div class="game-header">
     <div>
       <div class="game-title">📚 Battle of the Books</div>
       <div class="game-round" id="round-label">Round 1 of 4</div>
     </div>
-    <div class="scores">
-      <div class="score-badge score-good" id="score-good">✅ 0</div>
-      <div class="score-badge score-bad" id="score-bad">❌ 0</div>
-    </div>
+    <button class="btn-sm" onclick="restartGame()">Restart</button>
   </div>
+
   <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
-  <div class="instruction">Tap a title → then tap its author</div>
+  <div class="instruction">Tap a title, then tap its author</div>
 
   <div id="round-complete">
     <div class="big-emoji">🎉</div>
@@ -191,215 +263,136 @@ const ALL_BOOKS = [
   {title:"Who was Walt Disney?", author:"Whitney Stewart"},
 ];
 
-const COLORS = ["#ef476f","#f4a261","#ffd166","#06d6a0","#48cae4","#4361ee","#a663cc","#f72585","#3a86ff","#fb5607"];
-const ROUND_SIZE = 5;
-
-let shuffledBooks = [];
-let roundIndex = 0;
-let roundBooks = [];
-let selectedTitle = null;
-let selectedAuthor = null;
-let matched = [];
-let score = 0;
-let errors = 0;
-let colorMap = {};
-let locked = false;
+const ROUND_SIZE=5;
+let shuffledBooks=[],roundIndex=0,roundBooks=[],selectedTitle=null,selectedAuthor=null;
+let matched=[],score=0,errors=0,locked=false;
 
 function shuffle(arr){return [...arr].sort(()=>Math.random()-0.5);}
-
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('active');});
-  document.getElementById(id).classList.add('active');
-}
+function cardId(type,val){return type+'-'+val.replace(/\W/g,'_');}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
 
 function startGame(){
-  shuffledBooks = shuffle(ALL_BOOKS);
-  roundIndex = 0; score = 0; errors = 0;
-  loadRound();
-  showScreen('game');
+  shuffledBooks=shuffle(ALL_BOOKS);
+  roundIndex=0;score=0;errors=0;
+  updateScores();loadRound();showScreen('game');
 }
 
 function loadRound(){
-  matched = []; selectedTitle = null; selectedAuthor = null; locked = false;
-  const start = roundIndex * ROUND_SIZE;
-  roundBooks = shuffledBooks.slice(start, start + ROUND_SIZE);
-  colorMap = {};
-  roundBooks.forEach((b,i)=>{ colorMap[b.title] = COLORS[i % COLORS.length]; });
-
-  document.getElementById('round-label').textContent =
-    `Round ${roundIndex+1} of ${Math.ceil(ALL_BOOKS.length/ROUND_SIZE)}`;
-  updateScores();
+  matched=[];selectedTitle=null;selectedAuthor=null;locked=false;
+  roundBooks=shuffledBooks.slice(roundIndex*ROUND_SIZE,(roundIndex+1)*ROUND_SIZE);
+  document.getElementById('round-label').textContent=`Round ${roundIndex+1} of ${Math.ceil(ALL_BOOKS.length/ROUND_SIZE)}`;
   updateProgress();
-
   document.getElementById('round-complete').classList.remove('show');
-  document.getElementById('game-board').style.display = '';
-
+  document.getElementById('game-board').style.display='';
   renderCards();
 }
 
 function renderCards(){
-  const titlesShuffled = shuffle(roundBooks);
-  const authorsShuffled = shuffle(roundBooks);
-
-  const tc = document.getElementById('titles-col');
-  const ac = document.getElementById('authors-col');
-  tc.innerHTML = ''; ac.innerHTML = '';
-
-  titlesShuffled.forEach(b=>{
-    const el = document.createElement('button');
-    el.className = 'card';
-    el.id = 'title-' + b.title.replace(/\W/g,'_');
-    el.textContent = b.title;
-    el.onclick = ()=>selectTitle(b.title);
+  const tc=document.getElementById('titles-col');
+  const ac=document.getElementById('authors-col');
+  tc.innerHTML='';ac.innerHTML='';
+  shuffle(roundBooks).forEach(b=>{
+    const el=document.createElement('button');
+    el.className='card';el.id=cardId('title',b.title);
+    el.textContent=b.title;el.onclick=()=>selectTitle(b.title);
     tc.appendChild(el);
   });
-
-  authorsShuffled.forEach(b=>{
-    const el = document.createElement('button');
-    el.className = 'card';
-    el.id = 'author-' + b.author.replace(/\W/g,'_');
-    el.textContent = b.author;
-    el.onclick = ()=>selectAuthor(b.author, b.title);
+  shuffle(roundBooks).forEach(b=>{
+    const el=document.createElement('button');
+    el.className='card';el.id=cardId('author',b.author);
+    el.textContent=b.author;el.onclick=()=>selectAuthor(b.author);
     ac.appendChild(el);
   });
 }
 
-function cardId(type, val){ return type+'-'+val.replace(/\W/g,'_'); }
-
 function selectTitle(title){
-  if(locked) return;
-  if(matched.includes(title)) return;
-  // Deselect previous
-  if(selectedTitle){
-    const prev = document.getElementById(cardId('title', selectedTitle));
-    if(prev){ prev.classList.remove('selected'); prev.style.background=''; prev.style.borderColor=''; prev.style.color=''; }
-  }
-  if(selectedTitle === title){ selectedTitle=null; return; }
-  selectedTitle = title;
-  const el = document.getElementById(cardId('title', title));
-  const color = colorMap[title];
-  el.classList.add('selected');
-  el.style.background = color;
-  el.style.borderColor = color;
-  el.style.color = '#0d1b2a';
-  if(selectedAuthor) checkMatch();
+  if(locked||matched.includes(title))return;
+  if(selectedTitle){const p=document.getElementById(cardId('title',selectedTitle));if(p)p.classList.remove('selected');}
+  if(selectedTitle===title){selectedTitle=null;return;}
+  selectedTitle=title;
+  document.getElementById(cardId('title',title)).classList.add('selected');
+  if(selectedAuthor)checkMatch();
 }
 
-function selectAuthor(author, bookTitle){
-  if(locked) return;
-  // Find which book this author belongs to
-  const book = roundBooks.find(b=>b.author===author);
-  if(!book) return;
-  if(matched.includes(book.title)) return;
-
-  if(selectedAuthor){
-    const prevBook = roundBooks.find(b=>b.author===selectedAuthor);
-    if(prevBook){
-      const prev = document.getElementById(cardId('author', selectedAuthor));
-      if(prev){ prev.classList.remove('selected'); prev.style.background=''; prev.style.borderColor=''; prev.style.color=''; }
-    }
-  }
-  if(selectedAuthor === author){ selectedAuthor=null; return; }
-  selectedAuthor = author;
-  const el = document.getElementById(cardId('author', author));
-  // Color based on what title is selected (if any)
-  const color = selectedTitle ? colorMap[selectedTitle] : '#48cae4';
-  el.classList.add('selected');
-  el.style.background = color;
-  el.style.borderColor = color;
-  el.style.color = '#0d1b2a';
-  if(selectedTitle) checkMatch();
+function selectAuthor(author){
+  if(locked)return;
+  const book=roundBooks.find(b=>b.author===author);
+  if(!book||matched.includes(book.title))return;
+  if(selectedAuthor){const p=document.getElementById(cardId('author',selectedAuthor));if(p)p.classList.remove('selected');}
+  if(selectedAuthor===author){selectedAuthor=null;return;}
+  selectedAuthor=author;
+  document.getElementById(cardId('author',author)).classList.add('selected');
+  if(selectedTitle)checkMatch();
 }
 
 function checkMatch(){
-  locked = true;
-  const book = roundBooks.find(b=>b.title===selectedTitle && b.author===selectedAuthor);
-  const titleEl = document.getElementById(cardId('title', selectedTitle));
-  const authorEl = document.getElementById(cardId('author', selectedAuthor));
+  locked=true;
+  const book=roundBooks.find(b=>b.title===selectedTitle&&b.author===selectedAuthor);
+  const titleEl=document.getElementById(cardId('title',selectedTitle));
+  const authorEl=document.getElementById(cardId('author',selectedAuthor));
 
   if(book){
-    // Correct!
     score++;
-    flashOverlay('rgba(6,214,160,0.15)');
-    [titleEl, authorEl].forEach(el=>{
-      el.classList.add('correct-flash');
-      setTimeout(()=>{
-        el.classList.remove('selected','correct-flash');
-        el.classList.add('matched');
-        el.style.background=''; el.style.borderColor=''; el.style.color='';
-      }, 350);
-    });
+    showToast('✅');
+    flashScreen('rgba(6,214,160,0.3)');
+    [titleEl,authorEl].forEach(el=>{el.classList.remove('selected');el.classList.add('correct-flash');});
     matched.push(selectedTitle);
-    selectedTitle = null; selectedAuthor = null;
+    selectedTitle=null;selectedAuthor=null;
     setTimeout(()=>{
-      locked = false;
-      updateProgress();
-      updateScores();
-      if(matched.length === roundBooks.length) roundDone();
-    }, 400);
+      [titleEl,authorEl].forEach(el=>{el.classList.remove('correct-flash');el.classList.add('matched');});
+      locked=false;updateScores();updateProgress();
+      if(matched.length===roundBooks.length)roundDone();
+    },550);
   } else {
-    // Wrong!
     errors++;
-    flashOverlay('rgba(239,71,111,0.2)');
-    [titleEl, authorEl].forEach(el=>{ el.classList.add('wrong-flash'); });
+    showToast('❌');
+    flashScreen('rgba(239,71,111,0.35)');
+    [titleEl,authorEl].forEach(el=>{el.classList.remove('selected');el.classList.add('wrong-flash');});
     setTimeout(()=>{
-      [titleEl, authorEl].forEach(el=>{
-        el.classList.remove('selected','wrong-flash');
-        el.style.background=''; el.style.borderColor=''; el.style.color='';
-      });
-      selectedTitle = null; selectedAuthor = null;
-      locked = false;
-      updateScores();
-    }, 500);
+      [titleEl,authorEl].forEach(el=>el.classList.remove('wrong-flash'));
+      selectedTitle=null;selectedAuthor=null;locked=false;updateScores();
+    },600);
   }
 }
 
-function flashOverlay(color){
-  const ov = document.getElementById('flash-overlay');
-  ov.style.background = color;
-  setTimeout(()=>{ ov.style.background='transparent'; }, 400);
+function showToast(emoji){
+  const t=document.getElementById('toast');
+  t.textContent=emoji;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),750);
+}
+
+function flashScreen(color){
+  const ov=document.getElementById('flash-overlay');
+  ov.style.background=color;
+  setTimeout(()=>ov.style.background='transparent',450);
 }
 
 function updateScores(){
-  document.getElementById('score-good').textContent = '✅ ' + score;
-  document.getElementById('score-bad').textContent = '❌ ' + errors;
+  document.getElementById('score-correct').textContent=score;
+  document.getElementById('score-wrong').textContent=errors;
 }
 
 function updateProgress(){
-  const totalMatched = roundIndex * ROUND_SIZE + matched.length;
-  const pct = (totalMatched / ALL_BOOKS.length) * 100;
-  document.getElementById('progress-fill').style.width = pct + '%';
+  const total=roundIndex*ROUND_SIZE+matched.length;
+  document.getElementById('progress-fill').style.width=(total/ALL_BOOKS.length*100)+'%';
 }
 
 function roundDone(){
-  const totalRounds = Math.ceil(ALL_BOOKS.length / ROUND_SIZE);
-  document.getElementById('game-board').style.display = 'none';
-  const rc = document.getElementById('round-complete');
-  rc.classList.add('show');
-  const isLast = (roundIndex + 1) >= totalRounds;
-  document.getElementById('rc-title').textContent = isLast ? 'All Done! 🏆' : `Round ${roundIndex+1} Complete! 🎉`;
-  document.getElementById('rc-sub').textContent = isLast
-    ? `You matched all 20 books!`
-    : `${totalRounds - roundIndex - 1} round(s) to go — keep it up!`;
-  const btn = document.getElementById('rc-btn');
-  btn.textContent = isLast ? 'See Results 🏆' : 'Next Round →';
-  btn.onclick = isLast ? showResults : nextRound;
+  const totalRounds=Math.ceil(ALL_BOOKS.length/ROUND_SIZE);
+  document.getElementById('game-board').style.display='none';
+  document.getElementById('round-complete').classList.add('show');
+  const isLast=(roundIndex+1)>=totalRounds;
+  document.getElementById('rc-title').textContent=isLast?'All Done! 🏆':`Round ${roundIndex+1} Complete! 🎉`;
+  document.getElementById('rc-sub').textContent=isLast?'You matched all 20 books!':`${totalRounds-roundIndex-1} round(s) to go!`;
+  const btn=document.getElementById('rc-btn');
+  btn.textContent=isLast?'See Results 🏆':'Next Round →';
+  btn.onclick=isLast?showResults:nextRound;
 }
 
-function nextRound(){
-  roundIndex++;
-  loadRound();
-}
-
-function showResults(){
-  document.getElementById('final-correct').textContent = score;
-  document.getElementById('final-errors').textContent = errors;
-  showScreen('done');
-}
-
-function restartGame(){
-  showScreen('menu');
-}
+function nextRound(){roundIndex++;loadRound();}
+function showResults(){document.getElementById('final-correct').textContent=score;document.getElementById('final-errors').textContent=errors;showScreen('done');}
+function restartGame(){showScreen('menu');}
 </script>
 </body>
 </html>
+
